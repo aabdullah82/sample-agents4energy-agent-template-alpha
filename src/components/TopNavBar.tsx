@@ -10,6 +10,11 @@ import { useUserAttributes } from '@/components/UserAttributesProvider';
 
 import { type Schema } from "@/../amplify/data/resource";
 import { generateClient } from 'aws-amplify/api';
+
+import { loadOutputs } from '../../utils/amplifyUtils';
+
+const outputs = loadOutputs();
+
 const amplifyClient = generateClient<Schema>();
 
 const TopNavBar: React.FC = () => {
@@ -33,7 +38,8 @@ const TopNavBar: React.FC = () => {
       amplifyClient.queries.invokeReActAgent({ chatSessionId: "initilize" })
 
       const newChatSession = await amplifyClient.models.ChatSession.create({});
-      router.push(`/chat/${newChatSession.data!.id}`);
+      // router.push(`/chat/${newChatSession.data!.id}`);
+      window.open(`/chat/${newChatSession.data!.id}`, '_blank');
     } catch (error) {
       console.error("Error creating chat session:", error);
       alert("Failed to create chat session.");
@@ -54,6 +60,9 @@ const TopNavBar: React.FC = () => {
             <>
               <Link href="/listChats" passHref>
                 <Button color="inherit">List Chats</Button>
+              </Link>
+              <Link href="/mcpServers" passHref>
+                <Button color="inherit">MCP Servers</Button>
               </Link>
               <Button color="inherit" onClick={handleCreateNewChat}>Create</Button>
             </>
@@ -97,6 +106,8 @@ const TopNavBar: React.FC = () => {
                   </MenuItem>
                 )}
                 <MenuItem onClick={signOut}>Logout</MenuItem>
+                <MenuItem>Agent ID: {outputs.custom.stackUUID}</MenuItem>
+                <MenuItem onClick={() => { handleClose(); router.push('/settings'); }}>Settings</MenuItem>
               </Menu>
             </>
           ) : (

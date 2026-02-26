@@ -16,12 +16,14 @@ import {
     writeFile,
     updateFile,
     textToTableTool,
-    searchFiles
+    searchFiles,
+    
 } from "../tools/s3ToolBox";
 import { userInputTool } from "../tools/userInputTool";
 import { pysparkTool } from "../tools/athenaPySparkTool";
 import { renderAssetTool } from "../tools/renderAssetTool";
 import { createProjectTool } from "../tools/createProjectTool";
+import { addAthenaSqlTool } from "../tools/athenaSql";
 
 
 // Create an MCP server
@@ -136,7 +138,7 @@ custom_layout = go.Layout(
     yaxis=dict(
         showgrid=True,
         gridcolor='lightgray',
-        type='log'  # <-- Set y-axis to logarithmic
+        # type='log'  # <-- Set y-axis to logarithmic
     )
 )
 
@@ -152,7 +154,7 @@ pio.templates.default = "white_clean_log"
     // updateFile,
     // textToTableTool,
     // searchFiles,
-    renderAssetTool,
+    // renderAssetTool,
     userInputTool,
     createProjectTool
 ]
@@ -172,6 +174,9 @@ for (const langChainTool of langGraphTools) {
         langChainToolHandler(langChainTool) as any
     );
 }
+
+// Register Athena SQL tool using the addAthenaSqlTool function
+addAthenaSqlTool(server);
 
 // Add logging middleware
 const logMiddleware = () => {

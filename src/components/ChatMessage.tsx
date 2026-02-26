@@ -21,9 +21,10 @@ import PySparkToolComponent from './messageComponents/PySparkToolComponent';
 import RenderAssetToolComponent from './messageComponents/RenderAssetToolComponent';
 import DefaultToolMessageComponent from './messageComponents/DefaultToolMessageComponent';
 import DuckDuckGoSearchToolComponent from './messageComponents/DuckDuckGoSearchToolComponent';
-import WebBrowserToolComponent from './messageComponents/WebBrowserToolComponent';
+// import WebBrowserToolComponent from './messageComponents/WebBrowserToolComponent';
 import CreateProjectToolComponent from './messageComponents/CreateProjectToolComponent';
-import CustomWorkshopComponent from './messageComponents/CustomWorkshopComponent'
+import CustomWorkshopComponent from './messageComponents/CustomWorkshopComponent';
+import AthenaSqlComponent from './messageComponents/AthenaSqlComponent';
 
 const ChatMessage = (params: {
     message: Message,
@@ -117,10 +118,16 @@ const ChatMessage = (params: {
                     return <TextToTableToolComponent content={message.content} theme={theme} />;
                 case 'pysparkTool':
                     return <PySparkToolComponent content={message.content} theme={theme} />;
-                case 'duckduckgo-search':
-                    return <DuckDuckGoSearchToolComponent content={message.content} theme={theme} />;
-                case 'webBrowserTool':
-                    return <WebBrowserToolComponent content={message.content} theme={theme} />;
+                // case 'duckduckgo-search':
+                //     return <DuckDuckGoSearchToolComponent content={message.content} theme={theme} />;
+                // case 'webBrowserTool':
+                //     return <WebBrowserToolComponent content={message.content} theme={theme} />;
+                case 'athenaSqlTool':
+                    return <AthenaSqlComponent
+                        content={message.content}
+                        theme={theme}
+                        chatSessionId={message.chatSessionId || ''}
+                    />;
                 // case 'permeabilityCalculator':
                 //     return <CustomWorkshopComponent content={message.content} theme={theme} />;
                 default:
